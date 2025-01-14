@@ -2,6 +2,8 @@
 
 Este proyecto implementa el famoso "Juego de la Vida" de John Conway utilizando la biblioteca p5.js.
 
+![Demostración del Juego de la Vida](eljuegodelavida.gif)
+
 ## Estructura del Proyecto
 
 - `index.html`: Archivo principal HTML que carga el script de p5.js y los archivos JavaScript del proyecto.
