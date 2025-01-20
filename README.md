@@ -2,6 +2,8 @@
 
 Este proyecto implementa el famoso "Juego de la Vida" de John Conway utilizando la biblioteca p5.js.
 
+Pincha aquí para jugar [Jugar](https://mariorht.github.io/El-juego-de-la-vida-P5Js/)
+
 ![Demostración del Juego de la Vida](eljuegodelavida.gif)
 
 ## Estructura del Proyecto
