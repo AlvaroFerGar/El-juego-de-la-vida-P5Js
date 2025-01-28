@@ -21,6 +21,16 @@ function setup() {
     buttonRestart = createButton("RESTART");
     buttonRestart.mousePressed(restart);
 
+    // Create color selector dropdown
+    colorSelector = createSelect();
+    colorSelector.position(200, height_canvas*grid_size + 30);
+    colorSelector.option('Red', 'red');
+    colorSelector.option('Blue', 'blue');
+    colorSelector.option('Green', 'green');
+    colorSelector.option('Purple', 'purple');
+    colorSelector.option('Orange', 'orange');
+    colorSelector.changed(updateColor);
+
     sliderFPS = createSlider(0, 50, 10);
     sliderFPS.position(10, height_canvas*grid_size + 30);
     sliderFPS.style('width', '150px');
@@ -45,6 +55,26 @@ function draw() {
   frameRate(sliderFPS.value());
 }
 
+function updateColor() {
+  let colorName = colorSelector.value();
+  switch(colorName) {
+      case 'red':
+          currentColor = [255, 0, 0];
+          break;
+      case 'blue':
+          currentColor = [0, 0, 255];
+          break;
+      case 'green':
+          currentColor = [0, 255, 0];
+          break;
+      case 'purple':
+          currentColor = [128, 0, 128];
+          break;
+      case 'orange':
+          currentColor = [255, 165, 0];
+          break;
+  }
+}
 
 function drawGrid() {
   for (var x = 0; x <= width; x += grid_size) {
@@ -80,7 +110,9 @@ function viveOmuere()
   let x = Math.floor(mouseX/grid_size);
   let y = Math.floor(mouseY/grid_size);
 
-  p.getCelula(x,y).cambiaEstado();
+  c=p.getCelula(x,y)
+  c.color=currentColor;
+  c.cambiaEstado();
   background(220);
   drawGrid();
   p.draw()

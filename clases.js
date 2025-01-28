@@ -1,8 +1,10 @@
 class Celula {
-    constructor(x, y)
+    constructor(x, y, color)
     {
       this.posX = x;
       this.posY = y;
+
+      this.color = color;
   
       this.viva = 0;
     }
@@ -10,7 +12,7 @@ class Celula {
     draw()
     {
       if(this.viva)  {    
-        fill(51);
+        fill(this.color[0], this.color[1], this.color[2]);
         stroke(0)
         rect(this.posX*grid_size, this.posY*grid_size, grid_size, grid_size);
       }
@@ -24,6 +26,11 @@ class Celula {
     }
     estaViva() {
         return this.viva;
+    }
+
+    setColor(color)
+    {
+        this.color=color;
     }
 
     cambiaEstado(){
@@ -41,7 +48,7 @@ class Poblacion {
         this.celulas = [];
         for(var y=0; y < height_canvas; y++)
             for(var x=0; x < width_canvas;x++)
-                this.celulas.push(new Celula(x,y));
+                this.celulas.push(new Celula(x,y,[0,0,0]));
 
         this.poblacionInicial();
     }
