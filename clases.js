@@ -6,6 +6,7 @@ class Celula {
     this.color = color;
 
     this.viva = 0;
+
   }
 
   draw() {
@@ -40,6 +41,8 @@ class Celula {
 class Poblacion {
   constructor(default_color = "red") {
     this.celulas = [];
+    this.deco_cells=true;
+
     for (var y = 0; y < height_canvas; y++)
       for (var x = 0; x < width_canvas; x++)
         this.celulas.push(new Celula(x, y, default_color));
@@ -172,11 +175,21 @@ class Poblacion {
     const centerX=50;
     const centerY=25;
 
-
+    console.log("ini "+this.deco_cells);
+    if(this.deco_cells===true)
+    {
+    init_cells.forEach((cell) => {
+      const [x, y, color] = cell;
+      this.getCelula(x, y).color = color;
+      this.getCelula(x, y).nace();
+    });
+    }
     const textStartX = centerX-31;
     const textStartY = centerY-11;    
     this.drawText("LIFE", textStartX, textStartY);
     
+
+    this.deco_cells=!this.deco_cells;
   }
 
   update() {

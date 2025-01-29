@@ -29,7 +29,7 @@ function setup() {
     colorSelector.option('🎨 Brush: Blue', 'blue');
     colorSelector.option('🎨 Brush: Green', 'green');
     colorSelector.option('🎨 Brush: Purple', 'purple');
-    colorSelector.option('🎨 Brush: Orange', 'orange');
+    colorSelector.option('🎨 Brush: Yellow', 'yellow');
     colorSelector.option('🧱 Border', 'border');
     colorSelector.changed(updateColor);
     
@@ -111,15 +111,15 @@ function string2color(colorname)
 {
   switch(colorname) {
     case 'red':
-        return [255, 0, 0];
+        return [238, 66, 102];//ee4266
     case 'blue':
-      return [0, 0, 255];
+      return [0, 129, 167];//0081a7
     case 'green':
-      return [0, 255, 0];
+      return [14, 173, 105];//0ead69
     case 'purple':
-      return [128, 0, 128];
-    case 'orange':
-      return [255, 165, 0];
+      return [125, 90, 173];//6a4c93
+    case 'yellow':
+      return [255, 210, 63];//ffd23f
     case 'border':
       return [0,0,0];
   }
@@ -165,11 +165,12 @@ function restart() {
 
 function clear_game() {
 
-  for (var celula of p.celulas)
-    {
-     if(celula.estaViva() && celula.color!=="border")
-      console.log("C:"+celula.posX+" "+celula.posY+" "+celula.color);
-    }
+  // Porcion de codigo para imprimir por consola las coordenadas y poder guardar dibujos
+  //for (var celula of p.celulas)
+  //{
+  //  if(celula.estaViva() && celula.color!=="border")
+  //    console.log("["+celula.posX+","+celula.posY+","+celula.color+"]");
+  //}
   console.log("clear");
   p.clear();
   background([220,220,220]);
