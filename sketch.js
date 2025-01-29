@@ -28,6 +28,7 @@ function setup() {
     colorSelector.option('Green', 'green');
     colorSelector.option('Purple', 'purple');
     colorSelector.option('Orange', 'orange');
+    colorSelector.option('Border', 'border');
     colorSelector.changed(updateColor);
     
     sliderFPS = createSlider(0, 50, 10);
@@ -104,8 +105,10 @@ function string2color(colorname)
       return [128, 0, 128];
     case 'orange':
       return [255, 165, 0];
+    case 'border':
+      return [0,0,0];
   }
-  return [0,0,0];
+  return [255,255,255];
 }
 
 function updateColor() {

@@ -12,7 +12,6 @@ class Celula {
     draw()
     {
       if(this.viva)  {
-        console.log(this.color);
         const color_array=string2color(this.color);
 
         fill(color_array[0], color_array[1], color_array[2]);
@@ -125,11 +124,10 @@ class Poblacion {
 
         let i = 0;
         for(var celula of this.celulas) {
-            if(nuevoColor[i]==0)
+            if(nuevoColor[i]==0 || celula.color==="border")
                 ;//celula.muere();
             else
             {
-                console.log(nuevoColor[i])
                 celula.color=nuevoColor[i];
                 celula.nace();
             }
@@ -178,7 +176,7 @@ class Poblacion {
                 if (newX >= 0 && newX < width_canvas && 
                     newY >= 0 && newY < height_canvas) {
                     const vecino = this.getCelula(newX, newY);
-                    if (vecino.estaViva()) {
+                    if (vecino.estaViva() && vecino.color!=="border") {
                         colores[vecino.color] = (colores[vecino.color] || 0) + 1/8;
                     }
                 }
