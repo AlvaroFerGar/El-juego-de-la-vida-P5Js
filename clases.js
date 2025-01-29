@@ -55,9 +55,12 @@ class Poblacion {
     for (var celula of this.celulas) celula.draw();
   }
 
-  poblacionInicial() {
+  clear(){
     for (var celula of this.celulas) celula.muere();
+  }
 
+  poblacionInicial() {
+    this.clear();
     // this.getCelula(10,11).nace();
     // this.getCelula(10,10).nace();
     // this.getCelula(10,9).nace();
@@ -87,7 +90,11 @@ class Poblacion {
         }
       }
 
-      if (maxRepeticiones >= 3 / 8) {
+      let vecinos_requeridos=3/8;
+      if(!celula.estaViva())
+        vecinos_requeridos=1/8;
+
+      if (maxRepeticiones >= vecinos_requeridos) {
         //nuevoColor.push(colorMasRepetido);
 
         let random = Math.random();

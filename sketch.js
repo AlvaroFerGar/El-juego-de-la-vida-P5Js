@@ -10,8 +10,8 @@ var visitedCells = new Set();
 
 function setup() {
     grid_size = 20;
-    width_canvas = 50;
-    height_canvas = 30;
+    width_canvas = 100;
+    height_canvas = 50;
     canvas = createCanvas(width_canvas*grid_size, height_canvas*grid_size);
     
     buttonPlay = createButton("PLAY");
@@ -20,20 +20,26 @@ function setup() {
     buttonPause.mousePressed(pause);
     buttonRestart = createButton("RESTART");
     buttonRestart.mousePressed(restart);
+    buttonClear = createButton("CLEAR");
+    buttonClear.mousePressed(clear_game);
     
     colorSelector = createSelect();
-    colorSelector.position(200, height_canvas*grid_size + 30);
-    colorSelector.option('Red', 'red');
-    colorSelector.option('Blue', 'blue');
-    colorSelector.option('Green', 'green');
-    colorSelector.option('Purple', 'purple');
-    colorSelector.option('Orange', 'orange');
-    colorSelector.option('Border', 'border');
+    //colorSelector.position(200, height_canvas*grid_size + 30);
+    colorSelector.option('Brush: Red', 'red');
+    colorSelector.option('Brush: Blue', 'blue');
+    colorSelector.option('Brush: Green', 'green');
+    colorSelector.option('Brush: Purple', 'purple');
+    colorSelector.option('Brush: Orange', 'orange');
+    colorSelector.option('Brush: Border', 'border');
     colorSelector.changed(updateColor);
     
+
     sliderFPS = createSlider(0, 50, 10);
     sliderFPS.position(10, height_canvas*grid_size + 30);
     sliderFPS.style('width', '150px');
+    //valueDisplayer = createP();
+    //valueDisplayer.position(10,height_canvas*grid_size + 30);
+    //valueDisplayer.html('FPS: '+sliderFPS.value());
     
     p = new Poblacion;
     frameRate(0);
@@ -89,6 +95,9 @@ function draw() {
   p.update();
 
   frameRate(sliderFPS.value());
+
+  //valueDisplayer.html('FPS: '+sliderFPS.value());
+
 }
 
 
@@ -137,11 +146,19 @@ function pause() {
 }
 
 function restart() {
+  console.log("restart");
   p.poblacionInicial();
-  background(220);
+  background([220,220,220]);
   drawGrid();
   p.draw();
+}
 
+function clear_game() {
+  console.log("clear");
+  p.clear();
+  background([220,220,220]);
+  drawGrid();
+  p.draw();
 }
 
 function viveOmuere()
@@ -152,7 +169,7 @@ function viveOmuere()
   c=p.getCelula(x,y)
   c.color=currentColor;
   c.cambiaEstado();
-  background(220);
+  background([220,220,220]);
   drawGrid();
   p.draw()
 
