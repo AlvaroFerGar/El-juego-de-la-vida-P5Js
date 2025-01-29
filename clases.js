@@ -97,9 +97,24 @@ class Poblacion {
                 }
             }
 
-            if(maxRepeticiones>=3)
-            {
-                nuevoColor.push(colorMasRepetido)
+            if(maxRepeticiones>=(3/8))
+            {              
+                //nuevoColor.push(colorMasRepetido);
+
+                let random = Math.random();
+                let acumulado = 0;
+                let colorElegido = 0;
+                
+                // Recorremos sumando hasta superar el número aleatorio
+                for(let color in coloresVecinos) {
+                    acumulado += coloresVecinos[color];
+                    if(random <= acumulado) {
+                        colorElegido = color;
+                        break;
+                    }
+                }
+                
+                nuevoColor.push(colorElegido);
             }
             else
             {
@@ -111,7 +126,7 @@ class Poblacion {
         let i = 0;
         for(var celula of this.celulas) {
             if(nuevoColor[i]==0)
-                celula.muere();
+                ;//celula.muere();
             else
             {
                 console.log(nuevoColor[i])
@@ -164,7 +179,7 @@ class Poblacion {
                     newY >= 0 && newY < height_canvas) {
                     const vecino = this.getCelula(newX, newY);
                     if (vecino.estaViva()) {
-                        colores[vecino.color] = (colores[vecino.color] || 0) + 1;
+                        colores[vecino.color] = (colores[vecino.color] || 0) + 1/8;
                     }
                 }
             }
