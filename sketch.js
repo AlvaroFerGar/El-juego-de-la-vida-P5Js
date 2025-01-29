@@ -2,6 +2,7 @@ var buttonPlay;
 var buttonPause;
 var buttonRestart;
 var sliderFPS;
+var currentColor="red";
 
 var p;
 
@@ -55,25 +56,26 @@ function draw() {
   frameRate(sliderFPS.value());
 }
 
-function updateColor() {
-  let colorName = colorSelector.value();
-  switch(colorName) {
-      case 'red':
-          currentColor = [255, 0, 0];
-          break;
-      case 'blue':
-          currentColor = [0, 0, 255];
-          break;
-      case 'green':
-          currentColor = [0, 255, 0];
-          break;
-      case 'purple':
-          currentColor = [128, 0, 128];
-          break;
-      case 'orange':
-          currentColor = [255, 165, 0];
-          break;
+
+function string2color(colorname)
+{
+  switch(colorname) {
+    case 'red':
+        return [255, 0, 0];
+    case 'blue':
+      return [0, 0, 255];
+    case 'green':
+      return [0, 255, 0];
+    case 'purple':
+      return [128, 0, 128];
+    case 'orange':
+      return [255, 165, 0];
   }
+  return [0,0,0];
+}
+
+function updateColor() {
+  currentColor = colorSelector.value();
 }
 
 function drawGrid() {

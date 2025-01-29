@@ -11,8 +11,11 @@ class Celula {
   
     draw()
     {
-      if(this.viva)  {    
-        fill(this.color[0], this.color[1], this.color[2]);
+      if(this.viva)  {
+        console.log(this.color);
+        const color_array=string2color(this.color);
+
+        fill(color_array[0], color_array[1], color_array[2]);
         stroke(0)
         rect(this.posX*grid_size, this.posY*grid_size, grid_size, grid_size);
       }
@@ -32,7 +35,6 @@ class Celula {
     {
         this.color=color;
     }
-
     cambiaEstado(){
         if (this.viva == 1)
             this.muere();
@@ -44,11 +46,11 @@ class Celula {
   
 
 class Poblacion {
-    constructor() {
+    constructor(default_color="red") {
         this.celulas = [];
         for(var y=0; y < height_canvas; y++)
             for(var x=0; x < width_canvas;x++)
-                this.celulas.push(new Celula(x,y,[0,0,0]));
+                this.celulas.push(new Celula(x,y,default_color));
 
         this.poblacionInicial();
     }
@@ -80,33 +82,42 @@ class Poblacion {
     }
 
     update() {
-        let nuevoEstado = [];
+        let nuevoColor = [];
 
         for(var celula of this.celulas) {
-            let vecinosVivos = this.calculaVecinosVivos(celula);
-            switch(celula.estaViva()) {
-                case 0:
-                    if(vecinosVivos == 3)
-                        nuevoEstado.push(1);
-                    else
-                        nuevoEstado.push(0);
-                    break;
-                case 1:
-                    if(vecinosVivos == 2 || vecinosVivos == 3)
-                        nuevoEstado.push(1);
-                    else 
-                        nuevoEstado.push(0);
-                    break;
+            let coloresVecinos = this.calculaColoresVecinos(celula);
+
+            let colorMasRepetido = 0;
+            let maxRepeticiones = 0;
+            
+            for(let color in coloresVecinos) {
+                if(coloresVecinos[color] > maxRepeticiones) {
+                    maxRepeticiones = coloresVecinos[color];
+                    colorMasRepetido = color;
+                }
+            }
+
+            if(maxRepeticiones>=3)
+            {
+                nuevoColor.push(colorMasRepetido)
+            }
+            else
+            {
+                nuevoColor.push(0);
             }
         }
 
+
         let i = 0;
         for(var celula of this.celulas) {
-            if(nuevoEstado[i])
-                celula.nace();
-            else
+            if(nuevoColor[i]==0)
                 celula.muere();
-
+            else
+            {
+                console.log(nuevoColor[i])
+                celula.color=nuevoColor[i];
+                celula.nace();
+            }
             i++;
         }
 
@@ -128,4 +139,36 @@ class Poblacion {
 
         return NO + N + NE + O + E + SO + S + SE;
     }
+
+    calculaColoresVecinos(celula) {
+            const movimientos = [
+                {dx: -1, dy: -1}, // NO
+                {dx: 0,  dy: -1}, // N
+                {dx: 1,  dy: -1}, // NE
+                {dx: -1, dy: 0},  // O
+                {dx: 1,  dy: 0},  // E
+                {dx: -1, dy: 1},  // SO
+                {dx: 0,  dy: 1},  // S
+                {dx: 1,  dy: 1}   // SE
+            ];
+            
+            const x = celula.posX;
+            const y = celula.posY;
+            const colores = {};
+            
+            for (const mov of movimientos) {
+                const newX = x + mov.dx;
+                const newY = y + mov.dy;
+                
+                if (newX >= 0 && newX < width_canvas && 
+                    newY >= 0 && newY < height_canvas) {
+                    const vecino = this.getCelula(newX, newY);
+                    if (vecino.estaViva()) {
+                        colores[vecino.color] = (colores[vecino.color] || 0) + 1;
+                    }
+                }
+            }
+            
+            return colores;
+        }
 }
