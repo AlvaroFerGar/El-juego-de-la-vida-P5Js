@@ -164,6 +164,12 @@ function restart() {
 }
 
 function clear_game() {
+
+  for (var celula of p.celulas)
+    {
+     if(celula.estaViva() && celula.color!=="border")
+      console.log("C:"+celula.posX+" "+celula.posY+" "+celula.color);
+    }
   console.log("clear");
   p.clear();
   background([220,220,220]);

@@ -46,6 +46,10 @@ class Poblacion {
 
     this.poblacionInicial();
   }
+  getCelulas()
+  {
+    return this.celulas;
+  }
 
   getCelula(x, y) {
     return this.celulas[x + y * width_canvas];
@@ -59,19 +63,120 @@ class Poblacion {
     for (var celula of this.celulas) celula.muere();
   }
 
+  // Definición de letras en formato de matriz 5x7
+
+  
+  drawLetter(letter, startX, startY) {
+
+
+    const pixelFont = {
+      'L': [
+        [1,1,1,0,0,0,0,0,0],
+        [1,1,1,0,0,0,0,0,0],
+        [1,1,1,0,0,0,0,0,0],
+        [1,1,1,0,0,0,0,0,0],
+        [1,1,1,0,0,0,0,0,0],
+        [1,1,1,0,0,0,0,0,0],
+        [1,1,1,0,0,0,0,0,0],
+        [1,1,1,0,0,0,0,0,0],
+        [1,1,1,0,0,0,0,0,0],
+        [1,1,1,0,0,0,0,0,0],
+        [1,1,1,0,0,0,0,0,0],
+        [1,1,1,0,0,0,0,0,0],
+        [1,1,1,1,1,1,1,1,1],
+        [1,1,1,1,1,1,1,1,1],
+        [1,1,1,1,1,1,1,1,1]
+      ],
+      'I': [
+        [0,0,0,1,1,1,0,0,0],
+        [0,0,0,1,1,1,0,0,0],
+        [0,0,0,1,1,1,0,0,0],
+        [0,0,0,1,1,1,0,0,0],
+        [0,0,0,1,1,1,0,0,0],
+        [0,0,0,1,1,1,0,0,0],
+        [0,0,0,1,1,1,0,0,0],
+        [0,0,0,1,1,1,0,0,0],
+        [0,0,0,1,1,1,0,0,0],
+        [0,0,0,1,1,1,0,0,0],
+        [0,0,0,1,1,1,0,0,0],
+        [0,0,0,1,1,1,0,0,0],
+        [0,0,0,1,1,1,0,0,0],
+        [0,0,0,1,1,1,0,0,0],
+        [0,0,0,1,1,1,0,0,0]
+      ],
+      'F': [
+        [1,1,1,1,1,1,1,1,1],
+        [1,1,1,1,1,1,1,1,1],
+        [1,1,1,1,1,1,1,1,1],
+        [1,1,1,0,0,0,0,0,0],
+        [1,1,1,0,0,0,0,0,0],
+        [1,1,1,0,0,0,0,0,0],
+        [1,1,1,1,1,1,0,0,0],
+        [1,1,1,1,1,1,0,0,0],
+        [1,1,1,1,1,1,0,0,0],
+        [1,1,1,0,0,0,0,0,0],
+        [1,1,1,0,0,0,0,0,0],
+        [1,1,1,0,0,0,0,0,0],
+        [1,1,1,0,0,0,0,0,0],
+        [1,1,1,0,0,0,0,0,0],
+        [1,1,1,0,0,0,0,0,0]
+        
+      ],
+      'E': [
+        [1,1,1,1,1,1,1,1,1],
+        [1,1,1,1,1,1,1,1,1],
+        [1,1,1,1,1,1,1,1,1],
+        [1,1,1,0,0,0,0,0,0],
+        [1,1,1,0,0,0,0,0,0],
+        [1,1,1,0,0,0,0,0,0],
+        [1,1,1,1,1,1,0,0,0],
+        [1,1,1,1,1,1,0,0,0],
+        [1,1,1,1,1,1,0,0,0],
+        [1,1,1,0,0,0,0,0,0],
+        [1,1,1,0,0,0,0,0,0],
+        [1,1,1,0,0,0,0,0,0],
+        [1,1,1,1,1,1,1,1,1],
+        [1,1,1,1,1,1,1,1,1],
+        [1,1,1,1,1,1,1,1,1]
+      ]
+    };
+
+    const letterData = pixelFont[letter];
+    if (!letterData) return;
+  
+    for (let y = 0; y < letterData.length; y++) {
+      for (let x = 0; x < letterData[y].length; x++) {
+        if (letterData[y][x] === 1) {
+          const posX = startX + x;
+          const posY = startY + y;
+          this.getCelula(posX, posY).color = "border";
+          this.getCelula(posX, posY).nace();
+        }
+      }
+    }
+  }
+  
+  drawText(text, startX, startY) {
+    const spacing = 17; // Espacio entre letras
+    let currentX = startX;
+    
+    for (let i = 0; i < text.length; i++) {
+      this.drawLetter(text[i], currentX, startY);
+      currentX += spacing;
+    }
+  }
+
   poblacionInicial() {
     this.clear();
-    // this.getCelula(10,11).nace();
-    // this.getCelula(10,10).nace();
-    // this.getCelula(10,9).nace();
-    // this.getCelula(9,9).nace();
-    // this.getCelula(11,10).nace();
 
-    this.getCelula(10, 11).nace();
-    this.getCelula(9, 11).nace();
-    this.getCelula(8, 11).nace();
-    this.getCelula(10, 10).nace();
-    this.getCelula(9, 9).nace();
+    const centerX=50;
+    const centerY=25;
+
+
+    const textStartX = centerX-31;
+    const textStartY = centerY-11;    
+    this.drawText("LIFE", textStartX, textStartY);
+    
   }
 
   update() {
