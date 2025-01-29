@@ -14,59 +14,65 @@ function setup() {
     height_canvas = 50;
     canvas = createCanvas(width_canvas*grid_size, height_canvas*grid_size);
     
-    buttonPlay = createButton("PLAY");
+    buttonPlay = createButton("🦠 PLAY");
     buttonPlay.mousePressed(play);
-    buttonPause = createButton("PAUSE");
+    buttonPause = createButton("⏸️ PAUSE");
     buttonPause.mousePressed(pause);
-    buttonRestart = createButton("RESTART");
+    buttonRestart = createButton("🔄 RESTART");
     buttonRestart.mousePressed(restart);
-    buttonClear = createButton("CLEAR");
+    buttonClear = createButton("🗑️ CLEAR");
     buttonClear.mousePressed(clear_game);
     
     colorSelector = createSelect();
     //colorSelector.position(200, height_canvas*grid_size + 30);
-    colorSelector.option('Brush: Red', 'red');
-    colorSelector.option('Brush: Blue', 'blue');
-    colorSelector.option('Brush: Green', 'green');
-    colorSelector.option('Brush: Purple', 'purple');
-    colorSelector.option('Brush: Orange', 'orange');
-    colorSelector.option('Brush: Border', 'border');
+    colorSelector.option('🎨 Brush: Red', 'red');
+    colorSelector.option('🎨 Brush: Blue', 'blue');
+    colorSelector.option('🎨 Brush: Green', 'green');
+    colorSelector.option('🎨 Brush: Purple', 'purple');
+    colorSelector.option('🎨 Brush: Orange', 'orange');
+    colorSelector.option('🧱 Border', 'border');
     colorSelector.changed(updateColor);
     
 
-    sliderFPS = createSlider(0, 50, 10);
+    sliderFPS = createSlider(0, 50, 10,1);
     sliderFPS.position(10, height_canvas*grid_size + 30);
     sliderFPS.style('width', '150px');
+    //sliderFPS.hide();
     //valueDisplayer = createP();
     //valueDisplayer.position(10,height_canvas*grid_size + 30);
     //valueDisplayer.html('FPS: '+sliderFPS.value());
     
+    pause();
+
     p = new Poblacion;
-    frameRate(0);
     background(220);
     drawGrid();
     p.draw();
 }
+
+//return true porque: https://github.com/processing/p5.js/pull/3092
 
 function mousePressed() {
     if (mouseX >= 0 && mouseX < width && mouseY >= 0 && mouseY < height) {
         isDragging = true;
         visitedCells.clear();
         handleCellChange(mouseX, mouseY);
-        return false;
     }
+    return true;
+
 }
 
 function mouseReleased() {
     isDragging = false;
-    return false;
+    return true;
 }
 
 function mouseDragged() {
     if (isDragging && mouseX >= 0 && mouseX < width && mouseY >= 0 && mouseY < height) {
         handleCellChange(mouseX, mouseY);
-        return false;
     }
+    return true;
+
 }
 
 // Función para manejar el cambio de estado de una celda
@@ -137,11 +143,15 @@ function drawGrid() {
 
 
 function play() {
-  frameRate(20);
+  console.log("play");
+  sliderFPS.show();
+  frameRate(sliderFPS.value());
 }
 
 
 function pause() {
+  console.log("pause");
+  sliderFPS.hide();
   frameRate(0);
 }
 
