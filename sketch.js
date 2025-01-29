@@ -3,26 +3,24 @@ var buttonPause;
 var buttonRestart;
 var sliderFPS;
 var currentColor="red";
-
 var p;
+// Variables para el control del arrastre
+var isDragging = false;
+var visitedCells = new Set();
 
 function setup() {
     grid_size = 20;
     width_canvas = 50;
     height_canvas = 30;
     canvas = createCanvas(width_canvas*grid_size, height_canvas*grid_size);
-    canvas.mouseClicked(viveOmuere);
-
+    
     buttonPlay = createButton("PLAY");
     buttonPlay.mousePressed(play);
-
     buttonPause = createButton("PAUSE");
     buttonPause.mousePressed(pause);
-
     buttonRestart = createButton("RESTART");
     buttonRestart.mousePressed(restart);
-
-    // Create color selector dropdown
+    
     colorSelector = createSelect();
     colorSelector.position(200, height_canvas*grid_size + 30);
     colorSelector.option('Red', 'red');
@@ -31,21 +29,57 @@ function setup() {
     colorSelector.option('Purple', 'purple');
     colorSelector.option('Orange', 'orange');
     colorSelector.changed(updateColor);
-
+    
     sliderFPS = createSlider(0, 50, 10);
     sliderFPS.position(10, height_canvas*grid_size + 30);
     sliderFPS.style('width', '150px');
-
-
-
+    
     p = new Poblacion;
     frameRate(0);
     background(220);
     drawGrid();
     p.draw();
+}
 
-  }
-  
+function mousePressed() {
+    if (mouseX >= 0 && mouseX < width && mouseY >= 0 && mouseY < height) {
+        isDragging = true;
+        visitedCells.clear();
+        handleCellChange(mouseX, mouseY);
+        return false;
+    }
+}
+
+function mouseReleased() {
+    isDragging = false;
+    return false;
+}
+
+function mouseDragged() {
+    if (isDragging && mouseX >= 0 && mouseX < width && mouseY >= 0 && mouseY < height) {
+        handleCellChange(mouseX, mouseY);
+        return false;
+    }
+}
+
+// Función para manejar el cambio de estado de una celda
+function handleCellChange(x, y) {
+    let gridX = Math.floor(x/grid_size);
+    let gridY = Math.floor(y/grid_size);
+    let cellKey = `${gridX},${gridY}`;
+    
+    // Solo ejecutamos viveOmuere si no hemos visitado esta celda en este arrastre
+    if (!visitedCells.has(cellKey)) {
+        visitedCells.add(cellKey);
+        let c = p.getCelula(gridX, gridY);
+        c.color = currentColor;
+        c.cambiaEstado();
+        background(220);
+        drawGrid();
+        p.draw();
+    }
+}
+
 function draw() {
   background(220);
   drawGrid();
