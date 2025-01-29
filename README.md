@@ -1,30 +1,44 @@
-# El Juego de la Vida en p5.js
+# 🎨 The game of colors 🎨
 
-Este proyecto implementa el famoso "Juego de la Vida" de John Conway utilizando la biblioteca p5.js.
-
-Pincha aquí para jugar [Jugar](https://mariorht.github.io/El-juego-de-la-vida-P5Js/)
-
-![Demostración del Juego de la Vida](eljuegodelavida.gif)
-
-## Estructura del Proyecto
-
-- `index.html`: Archivo principal HTML que carga el script de p5.js y los archivos JavaScript del proyecto.
-- `clases.js`: Contiene las clases `Celula` y `Poblacion` que representan las células individuales y la población de células, respectivamente.
-- `sketch.js`: Contiene las funciones `setup` y `draw` de p5.js, así como la lógica para la interacción del usuario.
-- `p5.min.js`: Biblioteca p5.js.
-- `README.md`: Este archivo.
+![Init gif](assets/start.gif)
+Try it [here](https://alvarofergar.github.io/El-juego-de-la-vida-P5Js/)
 
 
-## Uso
+This project is a fork of [Mario Roos Hoefgeest's implementation](https://github.com/mariorht/El-juego-de-la-vida-P5Js) of John Conway's "Game of Life," using the p5.js library. Kudos to my friend and colleague Mario 🤙
 
-1. Abre `index.html` en un navegador web.
-2. Usa los botones "PLAY", "PAUSE" y "RESTART" para controlar el juego.
-3. Ajusta la velocidad del juego con el control deslizante.
+# 🦠 Changes to the original Game of Life.
 
-## Requisitos
+* Cells inherit **colors** from their neighbors based on probability.
+* The most common neighboring color has the highest chance of being inherited.
+* Each neighbor contributes equally (1/8 weight) to color calculations.
 
-- [p5.js](https://p5js.org/)
+* **Modified survival rules:** living cells need 3/8 neighbors to *maybe* change its color.
+* **Modified survival rules:** once a cell is alive it wouldn't die, it will only change colors.
+* **Modified birth rules:** dead cells need 1/8 neighbors to *maybe* came alive.
+* **Border cells** affect diagonal connections and neighborhood calculations
 
-## Autor
+# 🕹️ How to play
 
-- Mario Roos Hoefgeest Toribio
+Configure your canvas with *RESTART*, *CLEAR* and the different brushes.
+Use the *PLAY* and *PAUSE* buttons to control the game, adjusting the game speed using the slider.
+
+
+## 🗂️ Project Structure
+
+-`index.html`: Main HTML file that loads the p5.js script and JavaScript files.
+
+-`initcells`: Contains an array of initial position to the default cells
+
+-`clases.js`: Contains the Cell and Population classes, representing individual cells and the cell population, respectively.
+
+-`sketch.js`: Includes the setup and draw functions from p5.js, as well as user interaction logic.
+
+-`p5.min.js`: The p5.js library.
+
+-`README.md`: This humble file.
+
+## 👥 Credits
+
+* **Original Implementation:** [Mario Roos Hoefgeest Toribio] (https://github.com/mariorht)
+* **Based on:** [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)
+* **Built with:** [p5.js](https://p5js.org/)

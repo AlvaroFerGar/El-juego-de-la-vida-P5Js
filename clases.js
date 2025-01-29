@@ -213,7 +213,6 @@ class Poblacion {
         vecinos_requeridos=1/8;
 
       if (maxRepeticiones >= vecinos_requeridos) {
-        //nuevoColor.push(colorMasRepetido);
 
         let random = Math.random();
         let acumulado = 0;
