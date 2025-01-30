@@ -39,6 +39,6 @@ Use the *PLAY* and *PAUSE* buttons to control the game, adjusting the game speed
 
 ## 👥 Credits
 
-* **Original Implementation:** [Mario Roos Hoefgeest Toribio] (https://github.com/mariorht)
+* **Original Implementation:** [Mario Roos Hoefgeest Toribio](https://github.com/mariorht)
 * **Based on:** [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)
 * **Built with:** [p5.js](https://p5js.org/)
