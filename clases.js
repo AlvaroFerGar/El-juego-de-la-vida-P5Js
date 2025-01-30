@@ -42,6 +42,7 @@ class Poblacion {
   constructor(default_color = "red") {
     this.celulas = [];
     this.deco_cells=true;
+    this.default_color=default_color;
 
     for (var y = 0; y < height_canvas; y++)
       for (var x = 0; x < width_canvas; x++)
@@ -63,7 +64,11 @@ class Poblacion {
   }
 
   clear(){
-    for (var celula of this.celulas) celula.muere();
+    for (var celula of this.celulas)
+    {
+      celula.color=this.default_color;
+      celula.muere();
+    }
   }
 
   // Definición de letras en formato de matriz 5x7
